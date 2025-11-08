@@ -1,0 +1,21 @@
+@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant light (&:where(.light, .light *));
+
+@theme {
+  --background: #ffffff;
+  --primary-gray: #a3a6ac;
+  --pageContent-background: #ecf0fa;
+}
+
+html.dark {
+  --background: #19202f;
+  --pageContent-background: #242b39;
+}
+
+body {
+  @apply bg-(--background) text-(--primary-gray);
+}
+
+.pageContent {
+  @apply bg-(--pageContent-background) min-h-screen;
+}

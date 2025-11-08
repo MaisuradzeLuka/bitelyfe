@@ -1,0 +1,55 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+.underlineHover {
+  @apply bg-gradient-to-r from-current to-current
+    bg-[length:0%_2px] bg-no-repeat bg-left-bottom
+    transition-[background-size] duration-600 ease-out
+    hover:bg-[length:100%_2px];
+}
+
+.borderGradient {
+  @apply bg-[linear-gradient(45deg,#521d91,#7062fd,#a63d87,#fe5f7d)];
+}
+
+.instagramBg {
+  @apply bg-[radial-gradient(circle_at_10%_100%,#fcff2d_0%,#ffae00_30%,#ff005b_52%,#880aff_85%,#740294)];
+}
+
+.purpleLinearBackground {
+  @apply bg-[radial-gradient(circle_at_top_right,_#6d62ff_0%,_#521d91_100%)];
+}
+
+@theme {
+  --breakpoint-xs: 350px;
+  --breakpoint-sm: 575px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --breakpoint-2xl: 1366px;
+  --breakpoint-3xl: 1636px;
+  --breakpoint-4xl: 1920px;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #94a3b8;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #3b82f6;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.adminContentWrapper {
+  @apply px-5 py-4 mt-10 bg-white dark:bg-[#19202F] border border-gray-300 dark:border-gray-700 shadow-md text-black dark:text-white rounded-md;
+}
