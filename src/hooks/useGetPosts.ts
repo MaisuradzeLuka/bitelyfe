@@ -4,7 +4,7 @@ import { PostFilters } from "@/types/postTypes";
 import { client } from "@/lib/rpc";
 import { DatabasePost } from "@/types/blogCardTypes";
 
-export const useGetPosts = (filters?: PostFilters) => {
+export const useGetPosts = (tableId: string, filters?: PostFilters) => {
   const {
     category,
     status,
@@ -46,6 +46,7 @@ export const useGetPosts = (filters?: PostFilters) => {
 
       const response = await client.api.posts.$get({
         query,
+        tableId,
       });
 
       if (!response.ok) {

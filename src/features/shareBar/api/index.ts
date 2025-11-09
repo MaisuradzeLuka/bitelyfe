@@ -28,3 +28,18 @@ export const useGetNextPostInfo = (createdAt: string) => {
     enabled: !!createdAt,
   });
 };
+
+export const useGetMayLikePosts = (category: string) => {
+  return useQuery({
+    queryKey: ["sharebar", "nextlinks", "maylike", category],
+    queryFn: async () => {
+      const res = await client.api.sharebar.category[":category"].$get({
+        param: { category },
+      });
+
+      if (!res.ok) throw new Error("Failed to fetch next post info");
+      return res.json();
+    },
+    enabled: !!category,
+  });
+};

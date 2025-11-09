@@ -21,7 +21,7 @@ export default function NextPostLinks({ createdAt }: { createdAt: string }) {
       {newer && (
         <div className="mb-8 pb-8   border-b md:pb-0  border-b-[#eeeeee] text-left w-full md:border-none md:w-1/2 shrink-0">
           <Link
-            href={`/blog/${newer.$id}`}
+            href={`/drinks/${newer.$id}`}
             className="text-black flex flex-col hover:text-[#6d62ff]"
           >
             <div className="font-[700] mb-2 ">
@@ -38,7 +38,7 @@ export default function NextPostLinks({ createdAt }: { createdAt: string }) {
       {older && (
         <div className="text-right w-full ml-auto pb-2 shrink-0 md:w-1/2">
           <Link
-            href={`/blog/${older.$id}`}
+            href={`/drinks/${older.$id}`}
             className="text-black flex flex-col hover:text-[#6d62ff]"
           >
             <div className="font-[700] mb-[6px] ">

@@ -7,6 +7,7 @@ const app = new Hono().get("/defaultpost", appwriteMiddleware, async (c) => {
   const databases = c.get("databases");
 
   const id = c.req.query("id");
+  const tableId = c.req.query("tableId");
   const limitParam = c.req.query("limit");
   const limit = limitParam ? Math.min(Number(limitParam), 100) : 1;
 
@@ -21,7 +22,7 @@ const app = new Hono().get("/defaultpost", appwriteMiddleware, async (c) => {
 
   const queries: string[] = [Query.limit(limit), Query.equal("$id", id)];
 
-  if (!DATABASE_ID || !POSTSTABLE_ID) {
+  if (!tableId) {
     return c.json(
       {
         error:
@@ -32,11 +33,7 @@ const app = new Hono().get("/defaultpost", appwriteMiddleware, async (c) => {
   }
 
   try {
-    const posts = await databases.listDocuments(
-      DATABASE_ID,
-      "drinsktable",
-      queries
-    );
+    const posts = await databases.listDocuments(DATABASE_ID, tableId, queries);
     return c.json(posts.documents);
   } catch (error) {
     console.error("Failed to fetch posts:", error);

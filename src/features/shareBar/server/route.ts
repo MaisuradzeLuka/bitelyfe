@@ -1,4 +1,4 @@
-import { DATABASE_ID, POSTSTABLE_ID } from "@/lib/config";
+import { DATABASE_ID, DRINKSTABLE_ID, POSTSTABLE_ID } from "@/lib/config";
 import { appwriteMiddleware } from "@/lib/session-midlweare";
 import { Hono } from "hono";
 import { Query } from "node-appwrite";
@@ -13,7 +13,7 @@ const app = new Hono()
 
     const res = await database.listDocuments(
       DATABASE_ID,
-      "drinsktable",
+      DRINKSTABLE_ID,
       queries
     );
 
@@ -32,7 +32,7 @@ const app = new Hono()
 
     const olderRes = await database.listDocuments(
       DATABASE_ID,
-      "drinsktable",
+      DRINKSTABLE_ID,
       olderQueries
     );
 
@@ -44,7 +44,7 @@ const app = new Hono()
 
     const newerRes = await database.listDocuments(
       DATABASE_ID,
-      "drinsktable",
+      DRINKSTABLE_ID,
       newerQueries
     );
 
@@ -54,6 +54,22 @@ const app = new Hono()
     ];
 
     return c.json(nextLinks);
+  })
+
+  .get("/category/:category", appwriteMiddleware, async (c) => {
+    const category = c.req.param("category");
+
+    const database = c.get("databases");
+
+    const queries = [Query.limit(4), Query.equal("category", category)];
+
+    const res = await database.listDocuments(
+      DATABASE_ID,
+      DRINKSTABLE_ID,
+      queries
+    );
+
+    return c.json(res.documents);
   });
 
 export default app;

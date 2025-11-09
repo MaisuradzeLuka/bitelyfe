@@ -12,6 +12,8 @@ export default function BlogCard({
   imageAspect,
   tagBg,
   hoverTextColor,
+  link,
+  categoryLink,
 }: BlogCardProps) {
   const { $createdAt, title, coverimage, category, summary, $id } = blog;
 
@@ -21,7 +23,7 @@ export default function BlogCard({
   return (
     <div className={cn("gap-5 lg:gap-[30px]  flex", s.wrapper, className)}>
       <Link
-        href={`/blog/${$id}`}
+        href={link}
         className={`relative flex-shrink-0 ${s.imageWrapper} ${imageAspect}`}
       >
         <Image src={coverimage} alt={title} fill className={s.image} />
@@ -30,16 +32,13 @@ export default function BlogCard({
       <div className={s.textWrapper}>
         <div className="flex items-center gap-4 mb-3 ">
           {category !== "vacancy" && (
-            <Link
-              href={`/drinks/${category}`}
-              className={`${s.categoryBg} ${tagBg}`}
-            >
+            <Link href={categoryLink} className={`${s.categoryBg} ${tagBg}`}>
               {category.toUpperCase()}
             </Link>
           )}
           <span className="text-sm">{date}</span>
         </div>
-        <Link href={`/blog/${$id}`} className="block">
+        <Link href={link} className="block">
           <HoverTitle
             text={title}
             titleClassname={cn(s.title, hoverTextColor, "cursor-pointer")}

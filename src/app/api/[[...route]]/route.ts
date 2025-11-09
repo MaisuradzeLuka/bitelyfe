@@ -14,8 +14,8 @@ import shareBar from "@/features/shareBar/server/route";
 import adminSidebar from "@/features/adminSidebar/server/route";
 import tableContent from "@/features/tableContent/server/route";
 import adminForm from "@/features/adminCreateForm/server/route";
+import blogsList from "@/features/blogCategories/server/route";
 import posts from "@/app/api/[[...route]]/posts";
-import teamMembers from "@/features/team/server/route";
 
 const app = new Hono().basePath("/api");
 
@@ -32,9 +32,9 @@ const routes = app
   .route("/adminsidebar", adminSidebar)
   .route("/adminform", adminForm)
   .route("/tablecontent", tableContent)
+  .route("/blogslist", blogsList)
   .route("/", defaultPost)
-  .route("/", posts)
-  .route("/", teamMembers);
+  .route("/", posts);
 
 export type AppType = typeof routes;
 export const GET = handle(routes);

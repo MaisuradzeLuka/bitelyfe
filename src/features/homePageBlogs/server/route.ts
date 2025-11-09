@@ -24,15 +24,34 @@ const app = new Hono()
   .get("/dailynews", appwriteMiddleware, async (c) => {
     const databases = c.get("databases");
 
-    const queries = [Query.orderDesc("$createdAt"), Query.limit(3)];
+    const { collections } = await databases.listCollections(DATABASE_ID);
 
-    const res = await databases.listDocuments(
-      DATABASE_ID,
-      POSTSTABLE_ID,
-      queries
+    const allPosts: any[] = [];
+
+    for (const table of collections) {
+      try {
+        const res = await databases.listDocuments(DATABASE_ID, table.$id, [
+          Query.orderDesc("$createdAt"),
+        ]);
+
+        allPosts.push(
+          ...res.documents.map((doc) => ({
+            ...doc,
+            tableId: table.$id,
+            tableName: table.name,
+          }))
+        );
+      } catch (err) {
+        console.warn(`Skipping collection ${table.$id}`, err);
+      }
+    }
+
+    allPosts.sort(
+      (a, b) =>
+        new Date(b.$createdAt).getTime() - new Date(a.$createdAt).getTime()
     );
 
-    return c.json(res.documents);
+    return c.json(allPosts);
   })
   .get("/sportnews", appwriteMiddleware, async (c) => {
     const databases = c.get("databases");

@@ -9,8 +9,6 @@ const nextConfig: NextConfig = {
         hostname: "images.unsplash.com",
         pathname: "**",
       },
-      { protocol: "https", hostname: "blogger.googleusercontent.com" },
-      { protocol: "https", hostname: "fra.cloud.appwrite.io" },
     ],
   },
 };

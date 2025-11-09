@@ -22,7 +22,6 @@ export default function CategoryContainer() {
     <ul className="w-full  space-y-[10px]">
       {categories.map((c) => (
         <li key={c.name}>
-          {" "}
           <CategoryCard categoryName={c.name} count={c.count} />
         </li>
       ))}

@@ -18,7 +18,7 @@ const ShareBar = ({ id }: { id: string }) => {
   return (
     <section className="my-8">
       <PostsPageWrapper>
-        <Tags tags={data[0].tags} />
+        {/* <Tags tags={data[0].tags} /> */}
 
         <div className="border border-gray-200 p-4">
           <ShareLinks flexDirection="flex-row" theme="dark" />

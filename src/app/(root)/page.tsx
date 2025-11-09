@@ -9,11 +9,11 @@ import HomePageBlogs from "@/features/homePageBlogs/ui/views/homePageBlogs-view"
 export default function Home() {
   return (
     <main>
-      <BreakingNews />
+      {/* <BreakingNews />
       <HeroSection />
       <EditorsPick />
       <HomePageBlogs />
-      <Gallery />
+      <Gallery /> */}
 
       <DontMiss className="purpleLinearBackground text-white" />
     </main>

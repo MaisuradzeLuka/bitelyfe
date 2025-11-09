@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { client } from "@/lib/rpc";
 import { DatabasePost } from "@/types/blogCardTypes";
 
-export const useGetPostById = (id?: string) => {
+export const useGetPostById = (tableId: string, id: string) => {
   const query = useQuery({
     queryKey: ["post", id],
     queryFn: async () => {
@@ -12,6 +12,7 @@ export const useGetPostById = (id?: string) => {
       const response = await client.api.defaultpost.$get({
         query: {
           id,
+          tableId,
         },
       });
 

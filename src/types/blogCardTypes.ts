@@ -14,6 +14,8 @@ export type BlogCardProps = {
   className?: string;
   titleClassName?: string;
   imageAspect?: string;
+  link: string;
+  categoryLink: string;
 };
 
 export type BlogCardVariantStyles = {

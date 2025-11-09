@@ -1,4 +1,5 @@
 "use client";
+
 import BlogCard from "@/components/shared/blogCard";
 import BlogCardContainer from "@/components/shared/blogContainer";
 import LoadMoreButton from "@/components/shared/loadMoreButton";
@@ -6,6 +7,8 @@ import { useGetPosts } from "@/hooks/useGetPosts";
 import { useSearchParams } from "next/navigation";
 import BlogsSkeleton from "./blogsSkeleton";
 import ErrorComponent from "@/components/shared/errorComponent";
+import { DRINKSTABLE_ID } from "@/lib/config";
+import { useGetBlogs } from "../../api";
 
 export default function Blogs({ blogCategory }: { blogCategory: string }) {
   const searchParams = useSearchParams();
@@ -16,11 +19,7 @@ export default function Blogs({ blogCategory }: { blogCategory: string }) {
     isLoading,
     isFetching,
     isError,
-  } = useGetPosts({
-    category: blogCategory,
-    limit: currentLimit,
-    queryKeyName: blogCategory,
-  });
+  } = useGetBlogs(blogCategory);
 
   if (isLoading) return <BlogsSkeleton />;
   if (isError || !posts) return <ErrorComponent />;
@@ -34,6 +33,8 @@ export default function Blogs({ blogCategory }: { blogCategory: string }) {
             variant="blog"
             blog={blog}
             hoverTextColor="hover:text-[#6d62ff]"
+            link={`/drinks/${blog.$id}`}
+            categoryLink={`/drinks/category/${blog.category}`}
           />
         ))}
       </BlogCardContainer>

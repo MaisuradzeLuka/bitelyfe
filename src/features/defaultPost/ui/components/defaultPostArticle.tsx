@@ -10,12 +10,18 @@ import { useGetPostById } from "../../api";
 import DefaultSkeleton from "./defaultSkeleton";
 import ErrorComponent from "@/components/shared/errorComponent";
 
-export default function DefaultPostArticle({ id }: { id: string }) {
-  const { data: posts, isLoading, isError } = useGetPostById(id);
+export default function DefaultPostArticle({
+  id,
+  tableId,
+}: {
+  id: string;
+  tableId: string;
+}) {
+  const { data: posts, isLoading, isError } = useGetPostById(tableId, id);
   if (isLoading) return <DefaultSkeleton />;
   if (isError || !posts) return <ErrorComponent />;
 
-  const { summary, title, createdDate, coverimage, category, readtime } =
+  const { summary, title, createdDate, category, coverimage, readtime } =
     posts[0];
 
   return (

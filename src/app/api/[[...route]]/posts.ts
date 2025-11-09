@@ -6,6 +6,8 @@ import { DATABASE_ID, POSTSTABLE_ID } from "@/lib/config";
 const app = new Hono().get("/posts", appwriteMiddleware, async (c) => {
   const databases = c.get("databases");
 
+  const tableId = c.req.query("tableId");
+
   const limitParam = c.req.query("limit");
   const limit = limitParam ? Math.min(Number(limitParam), 1000) : undefined;
 
@@ -36,7 +38,7 @@ const app = new Hono().get("/posts", appwriteMiddleware, async (c) => {
     queries.push(Query.orderDesc("$createdAt"));
   }
 
-  if (!DATABASE_ID || !POSTSTABLE_ID) {
+  if (!DATABASE_ID || !tableId) {
     return c.json(
       {
         error:
@@ -47,11 +49,7 @@ const app = new Hono().get("/posts", appwriteMiddleware, async (c) => {
   }
 
   try {
-    const posts = await databases.listDocuments(
-      DATABASE_ID,
-      "drinsktable",
-      queries
-    );
+    const posts = await databases.listDocuments(DATABASE_ID, tableId, queries);
     return c.json(posts.documents);
   } catch (error) {
     console.error("Failed to fetch posts:", error);
