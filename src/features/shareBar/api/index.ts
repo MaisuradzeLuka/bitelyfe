@@ -1,11 +1,13 @@
 import { client } from "@/lib/rpc";
 import { useQuery } from "@tanstack/react-query";
 
-export const useGetShareInfo = (id: string) => {
+export const useGetShareInfo = (id: string, tableId: string) => {
   return useQuery({
-    queryKey: ["sharebar", id],
+    queryKey: ["sharebar", tableId, id],
     queryFn: async () => {
-      const res = await client.api.sharebar[":id"].$get({ param: { id } });
+      const res = await client.api.sharebar[":id"][":tableId"].$get({
+        param: { id, tableId },
+      });
 
       if (!res.ok) throw new Error("Failed to fetch post info");
       return res.json();
@@ -14,27 +16,31 @@ export const useGetShareInfo = (id: string) => {
   });
 };
 
-export const useGetNextPostInfo = (createdAt: string) => {
+export const useGetNextPostInfo = (createdAt: string, tableId: string) => {
   return useQuery({
-    queryKey: ["sharebar", "nextlinks", createdAt],
+    queryKey: ["sharebar", "nextlinks", tableId, createdAt],
     queryFn: async () => {
-      const res = await client.api.sharebar.nextlinks[":createdAt"].$get({
-        param: { createdAt: String(createdAt) },
+      const res = await client.api.sharebar.nextlinks[":tableId"][
+        ":createdAt"
+      ].$get({
+        param: { tableId, createdAt },
       });
 
       if (!res.ok) throw new Error("Failed to fetch next post info");
       return res.json();
     },
-    enabled: !!createdAt,
+    enabled: !!createdAt && !!tableId,
   });
 };
 
-export const useGetMayLikePosts = (category: string) => {
+export const useGetMayLikePosts = (category: string, tableId: string) => {
   return useQuery({
-    queryKey: ["sharebar", "nextlinks", "maylike", category],
+    queryKey: ["sharebar", "nextlinks", "maylike", tableId, category],
     queryFn: async () => {
-      const res = await client.api.sharebar.category[":category"].$get({
-        param: { category },
+      const res = await client.api.sharebar.category[":category"][
+        ":tableId"
+      ].$get({
+        param: { category, tableId },
       });
 
       if (!res.ok) throw new Error("Failed to fetch next post info");

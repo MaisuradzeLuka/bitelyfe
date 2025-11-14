@@ -1,0 +1,237 @@
+{
+    "projectId": "690f2bdd0021138065f0",
+    "endpoint": "https://fra.cloud.appwrite.io/v1",
+    "projectName": "BiteLyfe",
+    "settings": {
+        "services": {
+            "account": true,
+            "avatars": true,
+            "databases": true,
+            "locale": true,
+            "health": true,
+            "storage": true,
+            "teams": true,
+            "users": true,
+            "sites": true,
+            "functions": true,
+            "graphql": true,
+            "messaging": true
+        },
+        "auth": {
+            "methods": {
+                "jwt": true,
+                "phone": true,
+                "invites": true,
+                "anonymous": true,
+                "email-otp": true,
+                "magic-url": true,
+                "email-password": true
+            },
+            "security": {
+                "duration": 31536000,
+                "limit": 0,
+                "sessionsLimit": 10,
+                "passwordHistory": 0,
+                "passwordDictionary": false,
+                "personalDataCheck": false,
+                "sessionAlerts": false,
+                "mockNumbers": []
+            }
+        }
+    },
+    "tablesDB": [
+        {
+            "$id": "690f2c26000d08785de3",
+            "name": "mainDB",
+            "enabled": true
+        }
+    ],
+    "tables": [
+        {
+            "$id": "poststable",
+            "$permissions": [
+                "create(\"guests\")",
+                "read(\"guests\")",
+                "update(\"guests\")",
+                "delete(\"guests\")"
+            ],
+            "databaseId": "690f2c26000d08785de3",
+            "name": "postsTable",
+            "enabled": true,
+            "rowSecurity": false,
+            "columns": [
+                {
+                    "key": "route",
+                    "type": "linestring",
+                    "required": false,
+                    "array": false,
+                    "default": null
+                },
+                {
+                    "key": "age",
+                    "type": "integer",
+                    "required": false,
+                    "array": false,
+                    "min": 18,
+                    "max": 80,
+                    "default": null
+                },
+                {
+                    "key": "active",
+                    "type": "boolean",
+                    "required": false,
+                    "array": false,
+                    "default": null
+                },
+                {
+                    "key": "city",
+                    "type": "string",
+                    "required": false,
+                    "array": false,
+                    "size": 100,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "description",
+                    "type": "string",
+                    "required": false,
+                    "array": false,
+                    "size": 1000,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "location",
+                    "type": "point",
+                    "required": false,
+                    "array": false,
+                    "default": null
+                },
+                {
+                    "key": "name",
+                    "type": "string",
+                    "required": false,
+                    "array": false,
+                    "size": 255,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "email",
+                    "type": "string",
+                    "required": false,
+                    "array": false,
+                    "format": "email",
+                    "default": null
+                }
+            ],
+            "indexes": []
+        },
+        {
+            "$id": "drinkstable",
+            "$permissions": [
+                "create(\"any\")",
+                "read(\"any\")",
+                "update(\"any\")",
+                "delete(\"any\")",
+                "create(\"guests\")",
+                "read(\"guests\")",
+                "update(\"guests\")",
+                "delete(\"guests\")"
+            ],
+            "databaseId": "690f2c26000d08785de3",
+            "name": "drinksTable",
+            "enabled": true,
+            "rowSecurity": false,
+            "columns": [
+                {
+                    "key": "title",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 100,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "type",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "elements": [
+                        "alcoholic",
+                        "non-alcoholic"
+                    ],
+                    "format": "enum",
+                    "default": null
+                },
+                {
+                    "key": "category",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "elements": [
+                        "water",
+                        "juice",
+                        "mineral",
+                        "cocktail",
+                        "tea",
+                        "coffee",
+                        "wine",
+                        "vodka",
+                        "viski",
+                        "champagne"
+                    ],
+                    "format": "enum",
+                    "default": null
+                },
+                {
+                    "key": "summary",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 256,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "content",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 70000,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "readtime",
+                    "type": "integer",
+                    "required": true,
+                    "array": false,
+                    "min": -9223372036854775808,
+                    "max": 9223372036854775807,
+                    "default": null
+                },
+                {
+                    "key": "coverimage",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "format": "url",
+                    "default": null
+                },
+                {
+                    "key": "tags",
+                    "type": "string",
+                    "required": false,
+                    "array": true,
+                    "size": 30,
+                    "default": null,
+                    "encrypt": false
+                }
+            ],
+            "indexes": []
+        }
+    ]
+}

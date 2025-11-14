@@ -1,5 +1,6 @@
-import { DATABASE_ID, DRINKSTABLE_ID, POSTSTABLE_ID } from "@/lib/config";
+import { DATABASE_ID } from "@/lib/config";
 import { appwriteMiddleware } from "@/lib/session-midlweare";
+import { DishesTable, DrinksTable } from "@/types/tablesTypes";
 import { Hono } from "hono";
 import { Query } from "node-appwrite";
 
@@ -7,24 +8,23 @@ const app = new Hono().get("/", appwriteMiddleware, async (c) => {
   const databases = c.get("databases");
 
   const category = c.req.query("category");
+  const tableId = c.req.query("tableId");
 
-  if (!category)
-    return c.json(
-      {
-        error: "Missing category.",
-      },
-      500
-    );
+  if (!tableId) {
+    return c.json({ message: "tableId is required" }, 400);
+  }
 
   const queries = [
-    Query.equal("category", category),
+    ...(category ? [Query.equal("category", category)] : []),
     Query.orderDesc("$createdAt"),
     Query.limit(6),
   ];
 
-  const res = await databases.listDocuments(
+  console.log(tableId);
+
+  const res = await databases.listDocuments<DrinksTable | DishesTable>(
     DATABASE_ID,
-    DRINKSTABLE_ID,
+    tableId,
     queries
   );
 

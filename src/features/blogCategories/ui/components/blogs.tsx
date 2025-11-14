@@ -10,7 +10,13 @@ import ErrorComponent from "@/components/shared/errorComponent";
 import { DRINKSTABLE_ID } from "@/lib/config";
 import { useGetBlogs } from "../../api";
 
-export default function Blogs({ blogCategory }: { blogCategory: string }) {
+export default function Blogs({
+  blogCategory,
+  tableId,
+}: {
+  blogCategory?: string;
+  tableId: string;
+}) {
   const searchParams = useSearchParams();
   const currentLimit = Number(searchParams.get("limit")) || 6;
 
@@ -19,10 +25,15 @@ export default function Blogs({ blogCategory }: { blogCategory: string }) {
     isLoading,
     isFetching,
     isError,
-  } = useGetBlogs(blogCategory);
+  } = useGetBlogs(
+    tableId,
+    blogCategory && blogCategory.length > 0 ? blogCategory : undefined
+  );
 
   if (isLoading) return <BlogsSkeleton />;
   if (isError || !posts) return <ErrorComponent />;
+
+  const linkByTable = tableId.replace("table", "");
 
   return (
     <div className="mb-15">
@@ -33,8 +44,8 @@ export default function Blogs({ blogCategory }: { blogCategory: string }) {
             variant="blog"
             blog={blog}
             hoverTextColor="hover:text-[#6d62ff]"
-            link={`/drinks/${blog.$id}`}
-            categoryLink={`/drinks/category/${blog.category}`}
+            link={`/${linkByTable}/${blog.$id}`}
+            categoryLink={`/${linkByTable}/category/${blog.category}`}
           />
         ))}
       </BlogCardContainer>

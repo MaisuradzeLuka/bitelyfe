@@ -1,6 +1,6 @@
 import BlogView from "@/features/blogCategories/ui/views/blog-view";
 import DontMiss from "@/features/dontMiss/ui/views/dontMiss-view";
-import { DRINKSTABLE_ID } from "@/lib/config";
+import { DISHESTABLE_ID } from "@/lib/config";
 
 type ParamsType = {
   params: Promise<{
@@ -13,7 +13,7 @@ export default async function page({ params }: ParamsType) {
 
   return (
     <>
-      <BlogView blogCategory={id} tableId={DRINKSTABLE_ID} />
+      <BlogView blogCategory={id} tableId={DISHESTABLE_ID} />
       <DontMiss className="purpleLinearBackground text-white" />
     </>
   );

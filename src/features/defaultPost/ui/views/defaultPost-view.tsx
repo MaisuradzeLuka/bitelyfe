@@ -15,7 +15,7 @@ export default function DefaultPost({
     <SectionWrapper>
       <MainSectionWrapper>
         <DefaultPostArticle id={id} tableId={tableId} />
-        <ShareBar id={id} />
+        <ShareBar id={id} tableId={tableId} />
       </MainSectionWrapper>
       <SectionSidebar />
     </SectionWrapper>

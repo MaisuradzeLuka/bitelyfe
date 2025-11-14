@@ -9,8 +9,8 @@ import { useGetShareInfo } from "../../api";
 import SharebarSkeleton from "../components/sharebarSkeleton";
 import ErrorComponent from "@/components/shared/errorComponent";
 
-const ShareBar = ({ id }: { id: string }) => {
-  const { data, isLoading, isError } = useGetShareInfo(id);
+const ShareBar = ({ id, tableId }: { id: string; tableId: string }) => {
+  const { data, isLoading, isError } = useGetShareInfo(id, tableId);
 
   if (isLoading) return <SharebarSkeleton />;
   if (isError || !data) return <ErrorComponent />;
@@ -18,17 +18,17 @@ const ShareBar = ({ id }: { id: string }) => {
   return (
     <section className="my-8">
       <PostsPageWrapper>
-        {/* <Tags tags={data[0].tags} /> */}
+        <Tags tags={data[0].tags} />
 
         <div className="border border-gray-200 p-4">
           <ShareLinks flexDirection="flex-row" theme="dark" />
         </div>
 
         <div className="flex flex-col md:flex-row font-bold">
-          <NextPostLinks createdAt={data[0].$createdAt} />
+          <NextPostLinks createdAt={data[0].$createdAt} tableId={tableId} />
         </div>
 
-        <MayLike category={data[0].category} />
+        <MayLike category={data[0].category} tableId={tableId} />
       </PostsPageWrapper>
     </section>
   );

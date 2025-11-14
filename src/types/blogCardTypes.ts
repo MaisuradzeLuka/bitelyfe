@@ -1,3 +1,5 @@
+import { DishesTable, DrinksTable } from "./tablesTypes";
+
 export type BlogType = {
   title: string;
   summary?: string;
@@ -7,7 +9,7 @@ export type BlogType = {
 };
 
 export type BlogCardProps = {
-  blog: DatabasePost;
+  blog: DrinksTable | DishesTable;
   hoverTextColor?: string;
   tagBg?: string;
   variant: "reverse" | "horizontal" | "vertical" | "blog";

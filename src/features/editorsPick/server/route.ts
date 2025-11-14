@@ -1,5 +1,6 @@
-import { DATABASE_ID, POSTSTABLE_ID } from "@/lib/config";
+import { DATABASE_ID, DISHESTABLE_ID } from "@/lib/config";
 import { appwriteMiddleware } from "@/lib/session-midlweare";
+import { DishesTable } from "@/types/tablesTypes";
 import { Hono } from "hono";
 import { Query } from "node-appwrite";
 
@@ -7,62 +8,39 @@ const app = new Hono()
   .get("/topcards", appwriteMiddleware, async (c) => {
     const databases = c.get("databases");
 
-    const restaurantQueries = [
-      Query.equal("category", "restaurant"),
-      Query.orderDesc("$createdAt"),
-      Query.limit(1),
-    ];
+    const queries = [Query.orderDesc("likescount"), Query.limit(2)];
 
-    const restaurant = await databases.listDocuments(
+    const res = await databases.listDocuments<DishesTable>(
       DATABASE_ID,
-      POSTSTABLE_ID,
-      restaurantQueries
+      DISHESTABLE_ID,
+      queries
     );
 
-    const dishQueries = [
-      Query.equal("category", "dish"),
-      Query.orderDesc("$createdAt"),
-      Query.limit(1),
-    ];
-
-    const dish = await databases.listDocuments(
-      DATABASE_ID,
-      POSTSTABLE_ID,
-      dishQueries
-    );
-
-    const newestRestaurant = restaurant.documents[0] || null;
-    const newestDish = dish.documents[0] || null;
-
-    return c.json([newestRestaurant, newestDish]);
+    return c.json(res.documents);
   })
   .get("/bottomcards", appwriteMiddleware, async (c) => {
     const databases = c.get("databases");
-    const uniqueDishes = [];
+    const uniqueDishes: DishesTable[] = [];
     const usedCountries = new Set<string>();
 
     while (uniqueDishes.length < 3) {
-      const queries = [
-        Query.equal("category", "dish"),
-        Query.orderDesc("likescount"),
-        Query.limit(1),
-      ];
+      const queries = [Query.orderDesc("likescount"), Query.limit(1)];
 
-      for (const country of usedCountries) {
-        queries.push(Query.notEqual("country", country));
+      if (usedCountries.size > 0) {
+        queries.push(Query.notContains("region", Array.from(usedCountries)));
       }
 
-      const result = await databases.listDocuments(
+      const result = await databases.listDocuments<DishesTable>(
         DATABASE_ID,
-        POSTSTABLE_ID,
+        DISHESTABLE_ID,
         queries
       );
 
       if (result.documents.length === 0) break;
 
       const dish = result.documents[0];
-      if (!usedCountries.has(dish.country)) {
-        usedCountries.add(dish.country);
+      if (!usedCountries.has(dish.region)) {
+        usedCountries.add(dish.region);
         uniqueDishes.push(dish);
       } else {
         break;

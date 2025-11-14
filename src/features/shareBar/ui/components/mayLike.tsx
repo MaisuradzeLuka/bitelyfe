@@ -4,14 +4,21 @@ import BlogCard from "@/components/shared/blogCard";
 import ErrorComponent from "@/components/shared/errorComponent";
 import SectionTitle from "@/components/shared/sectionTitle";
 
-import { useGetPosts } from "@/hooks/useGetPosts";
 import MayLikeSkeleton from "./mayLikeSkeleton";
-import { DRINKSTABLE_ID } from "@/lib/config";
 import { useGetMayLikePosts } from "../../api";
-import { DatabasePost } from "@/types/blogCardTypes";
 
-const MayLike = ({ category }: { category: string }) => {
-  const { data: posts, isLoading, isError } = useGetMayLikePosts(category);
+const MayLike = ({
+  category,
+  tableId,
+}: {
+  category: string;
+  tableId: string;
+}) => {
+  const {
+    data: posts,
+    isLoading,
+    isError,
+  } = useGetMayLikePosts(category, tableId);
   if (isLoading) return <MayLikeSkeleton />;
   if (!posts || isError) return <ErrorComponent />;
 
@@ -23,7 +30,7 @@ const MayLike = ({ category }: { category: string }) => {
         {posts.map((item) => (
           <li key={item.$id}>
             <BlogCard
-              blog={item as DatabasePost}
+              blog={item}
               variant={"vertical"}
               hoverTextColor="hover:text-[#6d62ff]"
               link={`/drinks/${item.$id}`}

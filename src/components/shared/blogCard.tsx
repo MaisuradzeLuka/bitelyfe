@@ -31,11 +31,10 @@ export default function BlogCard({
 
       <div className={s.textWrapper}>
         <div className="flex items-center gap-4 mb-3 ">
-          {category !== "vacancy" && (
-            <Link href={categoryLink} className={`${s.categoryBg} ${tagBg}`}>
-              {category.toUpperCase()}
-            </Link>
-          )}
+          <Link href={categoryLink} className={`${s.categoryBg} ${tagBg}`}>
+            {category.toUpperCase()}
+          </Link>
+
           <span className="text-sm">{date}</span>
         </div>
         <Link href={link} className="block">

@@ -18,7 +18,7 @@ const DontMissCards = ({ categoryBg, hoverTextColor }: DontMissCardsType) => {
       {posts.map((item) => (
         <li key={item.$id}>
           <BlogCard
-            blog={item as DatabasePost}
+            blog={item}
             variant={"vertical"}
             tagBg={categoryBg}
             hoverTextColor={hoverTextColor}

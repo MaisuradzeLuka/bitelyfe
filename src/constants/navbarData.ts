@@ -15,7 +15,7 @@ export const navItems: NavItemsType[] = [
   {
     id: "dishes",
     title: "Dishes",
-    href: "/blog/category/dish",
+    href: "/dishes/category",
   },
   {
     id: "products",
@@ -25,38 +25,11 @@ export const navItems: NavItemsType[] = [
   {
     id: "drinks",
     title: "Drinks",
-    href: "/blog/category/drinks",
+    href: "/drinks/category",
   },
   {
     id: "contact",
     title: "Contact",
     href: "/contact",
   },
-  // {
-  //   id: "posts",
-  //   title: "Posts",
-  //   children: [
-  //     {
-  //       id: "default",
-  //       title: "Default",
-  //       href: "/blog/68e6ed1600343df0cfdf",
-  //     },
-  //     {
-  //       id: "heroImage",
-  //       title: "Hero Image",
-  //       href: "/heroPage/68e7934a0009be12b61c",
-  //     },
-  //   ],
-  // },
-
-  // {
-  //   id: "pages",
-  //   title: "Pages",
-  //   children: [
-  //     { id: "about", title: "About us", href: "/about" },
-  //     { id: "team", title: "Meet our team", href: "/team" },
-  //     { id: "faq", title: "FAQs", href: "/faqs" },
-  //     { id: "404", title: "404", href: "/404" },
-  //   ],
-  // },
 ];

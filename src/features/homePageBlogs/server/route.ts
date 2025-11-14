@@ -26,7 +26,7 @@ const app = new Hono()
 
     const { collections } = await databases.listCollections(DATABASE_ID);
 
-    const allPosts: any[] = [];
+    let allPosts: any[] = [];
 
     for (const table of collections) {
       try {
@@ -42,16 +42,16 @@ const app = new Hono()
           }))
         );
       } catch (err) {
-        console.warn(`Skipping collection ${table.$id}`, err);
+        console.warn(`Skipping collection ${table.$id}`);
       }
     }
 
-    allPosts.sort(
+    const sorted = allPosts.sort(
       (a, b) =>
         new Date(b.$createdAt).getTime() - new Date(a.$createdAt).getTime()
     );
 
-    return c.json(allPosts);
+    return c.json(sorted.slice(0, 3));
   })
   .get("/sportnews", appwriteMiddleware, async (c) => {
     const databases = c.get("databases");

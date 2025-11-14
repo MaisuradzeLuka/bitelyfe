@@ -1,26 +1,17 @@
-import { DATABASE_ID, DRINKSTABLE_ID, POSTSTABLE_ID } from "@/lib/config";
+import { DATABASE_ID } from "@/lib/config";
 import { appwriteMiddleware } from "@/lib/session-midlweare";
+import { DishesTable, DrinksTable } from "@/types/tablesTypes";
 import { Hono } from "hono";
 import { Query } from "node-appwrite";
 
 const app = new Hono()
-  .get("/:id", appwriteMiddleware, async (c) => {
-    const id = c.req.param("id");
-
-    const database = c.get("databases");
-
-    const queries = [Query.limit(1), Query.equal("$id", [id])];
-
-    const res = await database.listDocuments(
-      DATABASE_ID,
-      DRINKSTABLE_ID,
-      queries
-    );
-
-    return c.json(res.documents);
-  })
-  .get("/nextlinks/:createdAt", appwriteMiddleware, async (c) => {
+  .get("/nextlinks/:tableId/:createdAt", appwriteMiddleware, async (c) => {
+    const tableId = c.req.param("tableId");
     const createdAt = c.req.param("createdAt");
+
+    if (!tableId || !createdAt) {
+      return c.json({ error: "Missing tableId or createdAt" }, 400);
+    }
 
     const database = c.get("databases");
 
@@ -30,9 +21,9 @@ const app = new Hono()
       Query.limit(1),
     ];
 
-    const olderRes = await database.listDocuments(
+    const olderRes = await database.listDocuments<DrinksTable | DishesTable>(
       DATABASE_ID,
-      DRINKSTABLE_ID,
+      tableId,
       olderQueries
     );
 
@@ -42,9 +33,9 @@ const app = new Hono()
       Query.limit(1),
     ];
 
-    const newerRes = await database.listDocuments(
+    const newerRes = await database.listDocuments<DrinksTable | DishesTable>(
       DATABASE_ID,
-      DRINKSTABLE_ID,
+      tableId,
       newerQueries
     );
 
@@ -56,16 +47,38 @@ const app = new Hono()
     return c.json(nextLinks);
   })
 
-  .get("/category/:category", appwriteMiddleware, async (c) => {
+  .get("/:id/:tableId", appwriteMiddleware, async (c) => {
+    const id = c.req.param("id");
+    const tableId = c.req.param("tableId");
+
+    if (!id || !tableId) {
+      return c.json({ error: "Missing id or tableId" }, 400);
+    }
+
+    const database = c.get("databases");
+
+    const queries = [Query.limit(1), Query.equal("$id", [id])];
+
+    const res = await database.listDocuments(DATABASE_ID, tableId, queries);
+
+    return c.json(res.documents);
+  })
+
+  .get("/category/:category/:tableId", appwriteMiddleware, async (c) => {
     const category = c.req.param("category");
+    const tableId = c.req.param("tableId");
+
+    if (!category || !tableId) {
+      return c.json({ error: "Missing category or tableId" }, 400);
+    }
 
     const database = c.get("databases");
 
     const queries = [Query.limit(4), Query.equal("category", category)];
 
-    const res = await database.listDocuments(
+    const res = await database.listDocuments<DrinksTable | DishesTable>(
       DATABASE_ID,
-      DRINKSTABLE_ID,
+      tableId,
       queries
     );
 

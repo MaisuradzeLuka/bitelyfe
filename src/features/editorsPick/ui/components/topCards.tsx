@@ -1,7 +1,6 @@
 "use client";
 
 import BlogCard from "@/components/shared/blogCard";
-import { DatabasePost } from "@/types/blogCardTypes";
 import { useGetTopCardsList } from "../../api";
 import TopCardsSkeleton from "./topCardsSkeleton";
 import ErrorComponent from "@/components/shared/errorComponent";
@@ -21,12 +20,14 @@ const TopCards = () => {
         return (
           <BlogCard
             key={card.$id}
-            blog={{ ...(card as unknown as DatabasePost), summary: "" }}
+            blog={{ ...card, summary: "" }}
             variant={"blog"}
             className={`${bgColors[index]} p-5 rounded-md`}
             hoverTextColor="hover:text-[#6610f2] lg:text-[20px]"
             imageAspect="lg:aspect-[7/5] lg:max-w-[240px]"
             tagBg="bg-[#ffffff]"
+            link={`/dishes/${card.$id}`}
+            categoryLink={`/dishes/category/${card.category}`}
           />
         );
       })}
