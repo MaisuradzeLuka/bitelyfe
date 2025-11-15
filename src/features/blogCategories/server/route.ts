@@ -9,6 +9,7 @@ const app = new Hono().get("/", appwriteMiddleware, async (c) => {
 
   const category = c.req.query("category");
   const tableId = c.req.query("tableId");
+  const limit = c.req.query("limit") || 6;
 
   if (!tableId) {
     return c.json({ message: "tableId is required" }, 400);
@@ -17,10 +18,8 @@ const app = new Hono().get("/", appwriteMiddleware, async (c) => {
   const queries = [
     ...(category ? [Query.equal("category", category)] : []),
     Query.orderDesc("$createdAt"),
-    Query.limit(6),
+    Query.limit(+limit),
   ];
-
-  console.log(tableId);
 
   const res = await databases.listDocuments<DrinksTable | DishesTable>(
     DATABASE_ID,

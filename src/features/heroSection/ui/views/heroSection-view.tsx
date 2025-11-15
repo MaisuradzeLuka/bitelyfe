@@ -30,6 +30,7 @@ const HeroSection = () => {
           summary={mainCard.summary}
           title={mainCard.title}
           id={mainCard.$id}
+          tableId={mainCard.tableId}
         />
 
         <HeroCards cards={data.slice(1, 5) as unknown as PostType[]} />

@@ -7,12 +7,11 @@ import LifeStyle from "./lifeStyle";
 export default function HomeBlogsContainer() {
   return (
     <>
-      <LifeStyle />
-      <TravelNews />
+      {/* <LifeStyle /> 
+      <TravelNews />*/}
       <Suspense fallback={null}>
         <RecentPosts />
       </Suspense>
-      <SportNews />
     </>
   );
 }

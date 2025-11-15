@@ -1,21 +1,26 @@
 import { client } from "@/lib/rpc";
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
-export const useGetBlogs = (tableId: string, category?: string) => {
+export const useGetBlogs = (
+  tableId: string,
+  limit: number,
+  category?: string
+) => {
   const query = useQuery({
-    queryKey: ["blogcards", category ?? "all"],
+    queryKey: ["blogcards", tableId, limit, category ?? "all"],
     queryFn: async () => {
       const queryObj: Record<string, string> = {};
       if (category) queryObj.category = category;
 
       const res = await client.api.blogslist.$get({
-        query: { tableId, ...queryObj },
+        query: { tableId, limit, ...queryObj },
       });
 
       if (!res.ok) throw new Error("Failed to fetch the posts");
 
       return res.json();
     },
+    placeholderData: keepPreviousData,
   });
 
   return query;

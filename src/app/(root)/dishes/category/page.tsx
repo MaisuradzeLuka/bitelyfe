@@ -5,7 +5,7 @@ import { DISHESTABLE_ID } from "@/lib/config";
 export default async function page() {
   return (
     <>
-      <BlogView blogCategory={""} tableId={DISHESTABLE_ID} />
+      <BlogView blogCategory="" tableId={DISHESTABLE_ID} />
       <DontMiss className="purpleLinearBackground text-white" />
     </>
   );

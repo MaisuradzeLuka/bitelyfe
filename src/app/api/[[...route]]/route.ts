@@ -15,6 +15,7 @@ import adminSidebar from "@/features/adminSidebar/server/route";
 import tableContent from "@/features/tableContent/server/route";
 import adminForm from "@/features/adminCreateForm/server/route";
 import blogsList from "@/features/blogCategories/server/route";
+import topCategories from "@/features/topCategories/server/route";
 import posts from "@/app/api/[[...route]]/posts";
 
 const app = new Hono().basePath("/api");
@@ -32,6 +33,7 @@ const routes = app
   .route("/adminsidebar", adminSidebar)
   .route("/adminform", adminForm)
   .route("/tablecontent", tableContent)
+  .route("/topcategories", topCategories)
   .route("/blogslist", blogsList)
   .route("/", defaultPost)
   .route("/", posts);

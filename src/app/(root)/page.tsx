@@ -12,8 +12,8 @@ export default function Home() {
       <BreakingNews />
       <HeroSection />
       <EditorsPick />
-      {/*<HomePageBlogs />
-      <Gallery /> */}
+      <HomePageBlogs />
+      <Gallery />
 
       <DontMiss className="purpleLinearBackground text-white" />
     </main>

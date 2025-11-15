@@ -13,4 +13,5 @@ export type PostType = {
   quote: string | null;
   userstable: string | null;
   section: string;
+  tableId: string;
 };

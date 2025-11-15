@@ -4,15 +4,19 @@ import React from "react";
 type TopCategoriesType = {
   categoryName: string;
   count: number;
+  tableId: string;
 };
 
 export default function CategoryCard({
   categoryName,
   count,
+  tableId,
 }: TopCategoriesType) {
+  const linkByTable = tableId.replace("table", "");
+
   return (
     <Link
-      href={`/blog/category/${categoryName}`}
+      href={`/${linkByTable}/category/${categoryName}`}
       className="flex items-center justify-between 
              bg-[#f1f4f9] p-[15px]
              rounded-sm font-[700] text-[16px] text-black 

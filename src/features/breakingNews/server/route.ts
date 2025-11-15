@@ -1,5 +1,11 @@
-import { DATABASE_ID, POSTSTABLE_ID, DRINKSTABLE_ID } from "@/lib/config";
+import {
+  DATABASE_ID,
+  POSTSTABLE_ID,
+  DRINKSTABLE_ID,
+  DISHESTABLE_ID,
+} from "@/lib/config";
 import { appwriteMiddleware } from "@/lib/session-midlweare";
+import { DishesTable, DrinksTable } from "@/types/tablesTypes";
 import { Hono } from "hono";
 import { Query } from "node-appwrite";
 
@@ -17,9 +23,17 @@ const app = new Hono().get("/", appwriteMiddleware, async (c) => {
   const fallbackQuery = [Query.orderDesc("$createdAt"), Query.limit(5)];
 
   const fetchTable = async (tableId: string) => {
-    let res = await databases.listDocuments(DATABASE_ID, tableId, lastDayQuery);
+    let res = await databases.listDocuments<DrinksTable | DishesTable>(
+      DATABASE_ID,
+      tableId,
+      lastDayQuery
+    );
     if (res.total === 0) {
-      res = await databases.listDocuments(DATABASE_ID, tableId, fallbackQuery);
+      res = await databases.listDocuments<DrinksTable | DishesTable>(
+        DATABASE_ID,
+        tableId,
+        fallbackQuery
+      );
     }
     return res.documents.map((doc) => ({
       ...doc,
@@ -28,7 +42,7 @@ const app = new Hono().get("/", appwriteMiddleware, async (c) => {
   };
 
   const [posts, drinks] = await Promise.all([
-    fetchTable(POSTSTABLE_ID),
+    fetchTable(DISHESTABLE_ID),
     fetchTable(DRINKSTABLE_ID),
   ]);
 

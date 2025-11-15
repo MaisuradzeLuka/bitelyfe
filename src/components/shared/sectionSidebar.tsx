@@ -22,7 +22,7 @@ export default function SectionSidebar() {
         <FollowUs gridCols="grid-cols-2 lg:grid-cols-1 xl:grid-cols-2" />
 
         <SidebarNews title="Daily news" posts={data as unknown as PostType[]} />
-        {/* <TopCategories /> */}
+        <TopCategories />
       </div>
       <AdvertisementBanner image="/linedev.png" position="sticky" />
     </div>

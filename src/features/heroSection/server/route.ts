@@ -1,10 +1,15 @@
-import { DATABASE_ID, POSTSTABLE_ID, DRINKSTABLE_ID } from "@/lib/config";
+import {
+  DATABASE_ID,
+  POSTSTABLE_ID,
+  DRINKSTABLE_ID,
+  DISHESTABLE_ID,
+} from "@/lib/config";
 import { appwriteMiddleware } from "@/lib/session-midlweare";
 import { GeneralHeroSectionTypes } from "@/types/tablesTypes";
 import { Hono } from "hono";
 import { Query } from "node-appwrite";
 
-const TABLE_IDS = [POSTSTABLE_ID, DRINKSTABLE_ID];
+const TABLE_IDS = [DISHESTABLE_ID, DRINKSTABLE_ID];
 
 const app = new Hono().get("/", appwriteMiddleware, async (c) => {
   const databases = c.get("databases");

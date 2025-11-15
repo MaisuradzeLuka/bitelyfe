@@ -27,6 +27,7 @@ export default function Blogs({
     isError,
   } = useGetBlogs(
     tableId,
+    currentLimit,
     blogCategory && blogCategory.length > 0 ? blogCategory : undefined
   );
 
@@ -49,7 +50,12 @@ export default function Blogs({
           />
         ))}
       </BlogCardContainer>
-      <LoadMoreButton increment={3} defaultLimit={6} isFetching={isFetching} />
+      <LoadMoreButton
+        increment={4}
+        defaultLimit={currentLimit}
+        isFetching={isFetching}
+        postsLength={posts.length}
+      />
     </div>
   );
 }

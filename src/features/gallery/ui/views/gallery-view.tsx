@@ -32,7 +32,7 @@ const Gallery = () => {
           />
         </div>
 
-        <SecondaryPosts images={data as unknown as []} />
+        <SecondaryPosts images={data} />
       </Wrapper>
     </section>
   );

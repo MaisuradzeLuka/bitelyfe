@@ -7,20 +7,18 @@ import LoadMoreButton from "@/components/shared/loadMoreButton";
 import { useSearchParams } from "next/navigation";
 import RecentPostsSkeleton from "./recentPostsSkeleton";
 import ErrorComponent from "@/components/shared/errorComponent";
+import { useGetRecentPosts } from "../../api";
 
 export default function RecentPosts() {
   const searchParams = useSearchParams();
   const currentLimit = Number(searchParams.get("limit")) || 6;
+
   const {
     data: posts,
     isLoading,
-    isFetching,
     isError,
-  } = useGetPosts({
-    sortBy: "$createdAt",
-    sortOrder: "desc",
-    limit: currentLimit,
-  });
+    isFetching,
+  } = useGetRecentPosts(currentLimit);
 
   if (isLoading) return <RecentPostsSkeleton />;
   if (isError || !posts) return <ErrorComponent />;
@@ -38,10 +36,16 @@ export default function RecentPosts() {
             variant="vertical"
             imageAspect="aspect-[1.59]"
             hoverTextColor="hover:text-[#6d62ff]"
+            link={"#"}
+            categoryLink={"#"}
           />
         ))}
       </BlogCardContainer>
-      <LoadMoreButton increment={3} defaultLimit={6} isFetching={isFetching} />
+      <LoadMoreButton
+        defaultLimit={6}
+        isFetching={isFetching}
+        postsLength={posts.length}
+      />
     </>
   );
 }

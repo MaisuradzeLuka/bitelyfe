@@ -1,5 +1,11 @@
-import { DATABASE_ID, POSTSTABLE_ID } from "@/lib/config";
+import {
+  DATABASE_ID,
+  DISHESTABLE_ID,
+  DRINKSTABLE_ID,
+  POSTSTABLE_ID,
+} from "@/lib/config";
 import { appwriteMiddleware } from "@/lib/session-midlweare";
+import { DishesTable, DrinksTable } from "@/types/tablesTypes";
 import { Hono } from "hono";
 import { Query } from "node-appwrite";
 
@@ -119,6 +125,32 @@ const app = new Hono()
       console.error("Failed to fetch posts:", error);
       return c.json({ error: "Failed to fetch posts from database." }, 500);
     }
+  })
+  .get("/recentposts", appwriteMiddleware, async (c) => {
+    const databases = c.get("databases");
+
+    const limit = c.req.query("limit") || 6;
+
+    const fetchDocuments = async (tableId: string) => {
+      const queries = [Query.orderDesc("$createdAt"), Query.limit(+limit / 2)];
+
+      const res = await databases.listDocuments<DrinksTable | DishesTable>(
+        DATABASE_ID,
+        tableId,
+        queries
+      );
+
+      return res.documents;
+    };
+
+    const drinks = await fetchDocuments(DRINKSTABLE_ID);
+    const dishes = await fetchDocuments(DISHESTABLE_ID);
+
+    const merged = [...drinks, ...dishes].sort((a, b) =>
+      a.$createdAt < b.$createdAt ? 1 : -1
+    );
+
+    return c.json(merged);
   });
 
 export default app;

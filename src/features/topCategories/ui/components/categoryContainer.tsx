@@ -1,28 +1,25 @@
 "use client";
+
 import React from "react";
 import CategoryCard from "./categoryCard";
-import { useGetPosts } from "@/hooks/useGetPosts";
-import { getMostCategories } from "@/lib/utils";
 import ErrorComponent from "@/components/shared/errorComponent";
+import { useGetTopCategories } from "../../api";
 
 export default function CategoryContainer() {
-  const {
-    data: posts,
-    isLoading,
-    isError,
-  } = useGetPosts({
-    queryKeyName: "allPosts",
-    limit: 1000,
-  });
+  const { data, isLoading, isError } = useGetTopCategories();
+
   if (isLoading) return null;
-  if (!posts || isError) return <ErrorComponent />;
-  const categories = getMostCategories(posts, "category");
+  if (!data || isError) return <ErrorComponent />;
 
   return (
     <ul className="w-full  space-y-[10px]">
-      {categories.map((c) => (
-        <li key={c.name}>
-          <CategoryCard categoryName={c.name} count={c.count} />
+      {data.map((category) => (
+        <li key={category.title}>
+          <CategoryCard
+            categoryName={category.title}
+            count={category.amount}
+            tableId={category.tableId}
+          />
         </li>
       ))}
     </ul>

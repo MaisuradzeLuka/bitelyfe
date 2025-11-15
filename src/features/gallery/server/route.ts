@@ -1,20 +1,26 @@
-import { DATABASE_ID, POSTSTABLE_ID } from "@/lib/config";
+import { DATABASE_ID, DISHESTABLE_ID, DRINKSTABLE_ID } from "@/lib/config";
 import { appwriteMiddleware } from "@/lib/session-midlweare";
+import { DishesTable, DrinksTable } from "@/types/tablesTypes";
 import { Hono } from "hono";
 import { Query } from "node-appwrite";
 
 const app = new Hono().get("/", appwriteMiddleware, async (c) => {
   const databases = c.get("databases");
 
-  const queries = [Query.equal("category", "restaurant"), Query.limit(6)];
+  const fetchDocuments = async (tableId: string) => {
+    const res = await databases.listDocuments<DrinksTable | DishesTable>(
+      DATABASE_ID,
+      tableId,
+      [Query.orderDesc("likescount"), Query.limit(3)]
+    );
 
-  const res = await databases.listDocuments(
-    DATABASE_ID,
-    POSTSTABLE_ID,
-    queries
-  );
+    return res.documents;
+  };
 
-  const imagesArray = res.documents.map((item) => ({
+  const drinks = await fetchDocuments(DRINKSTABLE_ID);
+  const dishes = await fetchDocuments(DISHESTABLE_ID);
+
+  const imagesArray = [...drinks, ...dishes].map((item) => ({
     id: item.$id,
     image: item.coverimage,
   }));

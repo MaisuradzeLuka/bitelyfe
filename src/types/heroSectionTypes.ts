@@ -6,6 +6,7 @@ export type MainCardProps = {
   title: string;
   summary: string;
   id: string;
+  tableId: string;
 };
 
 export type HeroCardsType = {
