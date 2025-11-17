@@ -2,6 +2,7 @@ import { SecondaryCardProps } from "@/types/secondaryCardTypes";
 import Image from "next/image";
 import Link from "next/link";
 import HoverTitle from "./hoverTitle";
+import { formatDate } from "@/lib/utils";
 
 const SecondaryPostPard = ({
   image,
@@ -33,7 +34,7 @@ const SecondaryPostPard = ({
           <HoverTitle text={title} />
         </Link>
 
-        <span className="block mt-[6px] text-[13px]">{date}</span>
+        <span className="block mt-[6px] text-[13px]">{formatDate(date)}</span>
       </div>
 
       <Link href={link} className={`flex-shrink-0 w-[120px] ${width}`}>

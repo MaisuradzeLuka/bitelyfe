@@ -1,5 +1,15 @@
 import { Models } from "node-appwrite";
 
+type GeneralTableType = {
+  title: string;
+  summary: string;
+  content: string;
+  readtime: number;
+  coverimage: string;
+  tags?: string[];
+  likescount: number;
+};
+
 type Temperature = "hot" | "cold" | "roomtemperature";
 
 export type DishRegion =
@@ -17,7 +27,7 @@ export type DishRegion =
 
 type Type = "breakfast" | "lunch" | "dinner";
 
-type Category =
+type DishCategory =
   | "snack"
   | "smoked"
   | "baked"
@@ -38,14 +48,7 @@ type MainIngredient =
   | "eggs"
   | "legumes";
 
-export type DishesType = {
-  title: string;
-  summary: string;
-  content: string;
-  readtime: number;
-  coverimage: string;
-  tags?: string[];
-  likescount: number;
+export type DishesType = GeneralTableType & {
   vegan: boolean;
   streetfood: boolean;
   glutenfree: boolean;
@@ -53,7 +56,7 @@ export type DishesType = {
   temperature: Temperature;
   region: DishRegion;
   type: Type;
-  category: Category;
+  category: DishCategory;
   mainingredient: MainIngredient;
 };
 
@@ -65,13 +68,7 @@ export type GeneralHeroSectionTypes = Omit<Models.Document, "data"> & {
   likescount: number;
 };
 
-type DrinksType = {
-  title: string;
-  coverimage: string;
-  tags: string[];
-  readtime: number;
-  content: string;
-  summary: string;
+type DrinksType = GeneralTableType & {
   type: "alcoholic" | "non-alcoholic";
   category:
     | "water"
@@ -86,5 +83,22 @@ type DrinksType = {
     | "champagne";
 };
 
+type ProductsType = GeneralTableType & {
+  glutenfree: boolean;
+  sugarfree: boolean;
+  vegan: boolean;
+  category:
+    | "vegetable"
+    | "fruit"
+    | "meat"
+    | "fish"
+    | "spice"
+    | "dairy"
+    | "grain"
+    | "oil"
+    | "other";
+};
+
 export type DrinksTable = Omit<Models.Document, "data"> & DrinksType;
 export type DishesTable = Omit<Models.Document, "data"> & DishesType;
+export type ProductsTable = Omit<Models.Document, "data"> & ProductsType;

@@ -1,12 +1,17 @@
+import { DishesTable, DrinksTable, ProductsTable } from "@/types/tablesTypes";
 import SecondaryPostPard from "./secondaryPostCard";
 import SectionTitle from "./sectionTitle";
-import { PostType } from "@/types/postType";
+
+type SidebarPost =
+  | (DrinksTable & { tableId: string })
+  | (DishesTable & { tableId: string })
+  | (ProductsTable & { tableId: string });
 
 export default function SidebarNews({
   posts,
   title,
 }: {
-  posts: PostType[];
+  posts: SidebarPost[];
   title: string;
 }) {
   return (
@@ -19,7 +24,7 @@ export default function SidebarNews({
             {posts.map((item) => (
               <SecondaryPostPard
                 key={item.$id}
-                date={item.$createdDate}
+                date={item.$createdAt}
                 image={item.coverimage}
                 title={item.title}
                 theme="light"
@@ -27,7 +32,7 @@ export default function SidebarNews({
                 width="!w-[120px]"
                 height="h-[90px]"
                 titleClassname="text-[15px] hover:text-[#6d62ff]"
-                link={`/heroPage/${item.$id}`}
+                link={`/${item.tableId.replace("table", "")}/${item.$id}`}
               />
             ))}
           </ul>

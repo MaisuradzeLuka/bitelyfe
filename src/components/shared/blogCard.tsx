@@ -15,7 +15,7 @@ export default function BlogCard({
   link,
   categoryLink,
 }: BlogCardProps) {
-  const { $createdAt, title, coverimage, category, summary, $id } = blog;
+  const { $createdAt, title, coverimage, category, summary } = blog;
 
   const date = formatDate($createdAt);
   const s = blogCardStyles[variant];

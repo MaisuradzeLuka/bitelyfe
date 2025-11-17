@@ -3,11 +3,9 @@
 import BlogCard from "@/components/shared/blogCard";
 import BlogCardContainer from "@/components/shared/blogContainer";
 import LoadMoreButton from "@/components/shared/loadMoreButton";
-import { useGetPosts } from "@/hooks/useGetPosts";
 import { useSearchParams } from "next/navigation";
 import BlogsSkeleton from "./blogsSkeleton";
 import ErrorComponent from "@/components/shared/errorComponent";
-import { DRINKSTABLE_ID } from "@/lib/config";
 import { useGetBlogs } from "../../api";
 
 export default function Blogs({

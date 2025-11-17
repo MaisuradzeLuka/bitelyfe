@@ -10,6 +10,9 @@ export default function TravelNews() {
 
   if (isLoading) return <TravelNewsSkeleton />;
   if (isError || !posts) return <ErrorComponent />;
+
+  console.log(posts);
+
   return (
     <BlogCardContainer
       categoryTitle="Best for Vaxshami"
@@ -21,6 +24,8 @@ export default function TravelNews() {
           blog={blog}
           variant="vertical"
           hoverTextColor="hover:text-[#6d62ff]"
+          categoryLink={`/products/category/${blog.category}`}
+          link={`/products/${blog.$id}`}
         />
       ))}
     </BlogCardContainer>

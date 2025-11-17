@@ -27,7 +27,7 @@ const LifeStyle = () => {
           category={mainPost.category}
           image={mainPost.coverimage}
           height="md:h-[420px]"
-          link={`/heroPage/${mainPost.$id}`}
+          link={`/products/${mainPost.$id}`}
         />
 
         <ul className="h-full grid grid-cols-1 gap-4 py-4 md:py-0">
@@ -42,7 +42,7 @@ const LifeStyle = () => {
               styles="bg-transparent text-sm xs:text-[16px] lg:text-[16px]"
               titleClassname="hover:text-[#6610f2]"
               height="h-[80px]"
-              link={`/heroPage/${item.$id}`}
+              link={`/products/${item.$id}`}
             />
           ))}
         </ul>

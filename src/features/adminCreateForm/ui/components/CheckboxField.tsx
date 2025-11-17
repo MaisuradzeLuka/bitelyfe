@@ -16,12 +16,7 @@ interface CheckboxFieldProps {
   required?: boolean;
 }
 
-const CheckboxField = ({
-  control,
-  name,
-  label,
-  required,
-}: CheckboxFieldProps) => {
+const CheckboxField = ({ control, name, label }: CheckboxFieldProps) => {
   return (
     <FormField
       control={control}

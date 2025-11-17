@@ -5,7 +5,6 @@ import { DontMissCardsType } from "@/types/dontMissTypes";
 import DontMissSkeleton from "./dontMissSkeleton";
 import ErrorComponent from "@/components/shared/errorComponent";
 import { useGetPostsList } from "../../api";
-import { DatabasePost } from "@/types/blogCardTypes";
 
 const DontMissCards = ({ categoryBg, hoverTextColor }: DontMissCardsType) => {
   const { data: posts, isLoading, isError } = useGetPostsList();

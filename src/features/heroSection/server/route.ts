@@ -1,9 +1,4 @@
-import {
-  DATABASE_ID,
-  POSTSTABLE_ID,
-  DRINKSTABLE_ID,
-  DISHESTABLE_ID,
-} from "@/lib/config";
+import { DATABASE_ID, DRINKSTABLE_ID, DISHESTABLE_ID } from "@/lib/config";
 import { appwriteMiddleware } from "@/lib/session-midlweare";
 import { GeneralHeroSectionTypes } from "@/types/tablesTypes";
 import { Hono } from "hono";

@@ -1,6 +1,5 @@
 "use client";
 import { client } from "@/lib/rpc";
-import { DatabasePost } from "@/types/blogCardTypes";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 export const useGetPostsList = () => {
@@ -33,20 +32,6 @@ export const useGetDailyNewsList = () => {
   return query;
 };
 
-export const useGetSportNews = (postLimit?: number) => {
-  return useQuery({
-    queryKey: ["sportNews", postLimit],
-    queryFn: async () => {
-      const response = await client.api.homeblogs.sportnews.$get({
-        limit: postLimit,
-      });
-
-      const data = await response.json();
-      return data as DatabasePost[];
-    },
-  });
-};
-
 export const useGetTravelNews = (postLimit?: number) => {
   return useQuery({
     queryKey: ["travelnews", postLimit],
@@ -55,8 +40,10 @@ export const useGetTravelNews = (postLimit?: number) => {
         limit: postLimit,
       });
 
+      if (!response.ok) throw new Error("Failed to fetch the posts");
+
       const data = await response.json();
-      return data as DatabasePost[];
+      return data;
     },
   });
 };

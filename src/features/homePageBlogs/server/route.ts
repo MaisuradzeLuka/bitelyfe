@@ -2,10 +2,10 @@ import {
   DATABASE_ID,
   DISHESTABLE_ID,
   DRINKSTABLE_ID,
-  POSTSTABLE_ID,
+  PRODUCTSTABLE_ID,
 } from "@/lib/config";
 import { appwriteMiddleware } from "@/lib/session-midlweare";
-import { DishesTable, DrinksTable } from "@/types/tablesTypes";
+import { DishesTable, DrinksTable, ProductsTable } from "@/types/tablesTypes";
 import { Hono } from "hono";
 import { Query } from "node-appwrite";
 
@@ -13,15 +13,11 @@ const app = new Hono()
   .get("/lifestyle", appwriteMiddleware, async (c) => {
     const databases = c.get("databases");
 
-    const queries = [
-      Query.equal("category", "product"),
-      Query.orderDesc("likescount"),
-      Query.limit(5),
-    ];
+    const queries = [Query.orderDesc("likescount"), Query.limit(5)];
 
-    const res = await databases.listDocuments(
+    const res = await databases.listDocuments<ProductsTable>(
       DATABASE_ID,
-      POSTSTABLE_ID,
+      PRODUCTSTABLE_ID,
       queries
     );
 
@@ -30,67 +26,34 @@ const app = new Hono()
   .get("/dailynews", appwriteMiddleware, async (c) => {
     const databases = c.get("databases");
 
-    const { collections } = await databases.listCollections(DATABASE_ID);
+    const fetchDocuments = async (tableId: string) => {
+      const queries = [Query.orderDesc("$createdAt"), Query.limit(3)];
 
-    let allPosts: any[] = [];
+      const res = await databases.listDocuments<
+        DrinksTable | DishesTable | ProductsTable
+      >(DATABASE_ID, tableId, queries);
 
-    for (const table of collections) {
-      try {
-        const res = await databases.listDocuments(DATABASE_ID, table.$id, [
-          Query.orderDesc("$createdAt"),
-        ]);
+      return res.documents.map((doc) => ({
+        ...doc,
+        tableId,
+      }));
+    };
 
-        allPosts.push(
-          ...res.documents.map((doc) => ({
-            ...doc,
-            tableId: table.$id,
-            tableName: table.name,
-          }))
-        );
-      } catch (err) {
-        console.warn(`Skipping collection ${table.$id}`);
-      }
-    }
+    const drinks = await fetchDocuments(DRINKSTABLE_ID);
+    const dishes = await fetchDocuments(DISHESTABLE_ID);
+    const products = await fetchDocuments(PRODUCTSTABLE_ID);
 
-    const sorted = allPosts.sort(
-      (a, b) =>
-        new Date(b.$createdAt).getTime() - new Date(a.$createdAt).getTime()
+    const merged = [...drinks, ...dishes, ...products].sort((a, b) =>
+      a.$createdAt < b.$createdAt ? 1 : -1
     );
+    const sorted = merged
+      .sort(
+        (a, b) =>
+          new Date(b.$createdAt).getTime() - new Date(a.$createdAt).getTime()
+      )
+      .slice(0, 3);
 
-    return c.json(sorted.slice(0, 3));
-  })
-  .get("/sportnews", appwriteMiddleware, async (c) => {
-    const databases = c.get("databases");
-
-    const limitParam = c.req.query("limit");
-    const limit = limitParam ? Math.min(Number(limitParam), 100) : 4;
-
-    const queries: string[] = [
-      Query.limit(limit),
-      Query.equal("section", "jobs"),
-    ];
-
-    if (!DATABASE_ID || !POSTSTABLE_ID) {
-      return c.json(
-        {
-          error:
-            "Missing Appwrite configuration. Please check DATABASE_ID and COLLECTION_ID.",
-        },
-        500
-      );
-    }
-
-    try {
-      const posts = await databases.listDocuments(
-        DATABASE_ID,
-        POSTSTABLE_ID,
-        queries
-      );
-      return c.json(posts.documents);
-    } catch (error) {
-      console.error("Failed to fetch posts:", error);
-      return c.json({ error: "Failed to fetch posts from database." }, 500);
-    }
+    return c.json(sorted);
   })
   .get("/travelnews", appwriteMiddleware, async (c) => {
     const databases = c.get("databases");
@@ -98,13 +61,9 @@ const app = new Hono()
     const limitParam = c.req.query("limit");
     const limit = limitParam ? Math.min(Number(limitParam), 100) : 3;
 
-    const queries: string[] = [
-      Query.limit(limit),
-      Query.equal("category", "restaurant"),
-      Query.equal("favorite", true),
-    ];
+    const queries: string[] = [Query.limit(limit)];
 
-    if (!DATABASE_ID || !POSTSTABLE_ID) {
+    if (!DATABASE_ID) {
       return c.json(
         {
           error:
@@ -115,9 +74,9 @@ const app = new Hono()
     }
 
     try {
-      const posts = await databases.listDocuments(
+      const posts = await databases.listDocuments<ProductsTable>(
         DATABASE_ID,
-        POSTSTABLE_ID,
+        PRODUCTSTABLE_ID,
         queries
       );
       return c.json(posts.documents);
@@ -134,19 +93,21 @@ const app = new Hono()
     const fetchDocuments = async (tableId: string) => {
       const queries = [Query.orderDesc("$createdAt"), Query.limit(+limit / 2)];
 
-      const res = await databases.listDocuments<DrinksTable | DishesTable>(
-        DATABASE_ID,
-        tableId,
-        queries
-      );
+      const res = await databases.listDocuments<
+        DrinksTable | DishesTable | ProductsTable
+      >(DATABASE_ID, tableId, queries);
 
-      return res.documents;
+      return res.documents.map((doc) => ({
+        ...doc,
+        tableId,
+      }));
     };
 
     const drinks = await fetchDocuments(DRINKSTABLE_ID);
     const dishes = await fetchDocuments(DISHESTABLE_ID);
+    const products = await fetchDocuments(PRODUCTSTABLE_ID);
 
-    const merged = [...drinks, ...dishes].sort((a, b) =>
+    const merged = [...drinks, ...dishes, ...products].sort((a, b) =>
       a.$createdAt < b.$createdAt ? 1 : -1
     );
 

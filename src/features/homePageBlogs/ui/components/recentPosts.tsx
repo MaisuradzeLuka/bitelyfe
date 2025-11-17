@@ -2,7 +2,6 @@
 import BlogCard from "@/components/shared/blogCard";
 import BlogCardContainer from "@/components/shared/blogContainer";
 
-import { useGetPosts } from "@/hooks/useGetPosts";
 import LoadMoreButton from "@/components/shared/loadMoreButton";
 import { useSearchParams } from "next/navigation";
 import RecentPostsSkeleton from "./recentPostsSkeleton";
@@ -36,8 +35,10 @@ export default function RecentPosts() {
             variant="vertical"
             imageAspect="aspect-[1.59]"
             hoverTextColor="hover:text-[#6d62ff]"
-            link={"#"}
-            categoryLink={"#"}
+            link={`/${blog.tableId.replace("table", "")}/${blog.$id}`}
+            categoryLink={`/${blog.tableId.replace("table", "")}/category/${
+              blog.category
+            }`}
           />
         ))}
       </BlogCardContainer>

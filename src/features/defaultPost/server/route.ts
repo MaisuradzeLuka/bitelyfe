@@ -1,7 +1,7 @@
 import { Query } from "node-appwrite";
 import { Hono } from "hono";
 import { appwriteMiddleware } from "@/lib/session-midlweare";
-import { DATABASE_ID, POSTSTABLE_ID } from "@/lib/config";
+import { DATABASE_ID } from "@/lib/config";
 
 const app = new Hono().get("/defaultpost", appwriteMiddleware, async (c) => {
   const databases = c.get("databases");

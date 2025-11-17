@@ -20,7 +20,7 @@ export const navItems: NavItemsType[] = [
   {
     id: "products",
     title: "Products",
-    href: "/blog/category/product",
+    href: "/products/category",
   },
   {
     id: "drinks",

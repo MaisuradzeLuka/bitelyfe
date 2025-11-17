@@ -2,7 +2,6 @@
 
 import BlogCard from "@/components/shared/blogCard";
 import Wrapper from "@/components/shared/wrapper";
-import { DatabasePost } from "@/types/blogCardTypes";
 import { useGetBottomCardsList } from "../../api";
 import BottomCardsSkeleton from "./bottomCardsSkeleton";
 import ErrorComponent from "@/components/shared/errorComponent";

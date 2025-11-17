@@ -1,6 +1,6 @@
 import { DATABASE_ID } from "@/lib/config";
 import { appwriteMiddleware } from "@/lib/session-midlweare";
-import { DishesTable, DrinksTable } from "@/types/tablesTypes";
+import { DishesTable, DrinksTable, ProductsTable } from "@/types/tablesTypes";
 import { Hono } from "hono";
 import { Query } from "node-appwrite";
 
@@ -21,11 +21,9 @@ const app = new Hono()
       Query.limit(1),
     ];
 
-    const olderRes = await database.listDocuments<DrinksTable | DishesTable>(
-      DATABASE_ID,
-      tableId,
-      olderQueries
-    );
+    const olderRes = await database.listDocuments<
+      DrinksTable | DishesTable | ProductsTable
+    >(DATABASE_ID, tableId, olderQueries);
 
     const newerQueries = [
       Query.greaterThan("$createdAt", createdAt),
@@ -33,11 +31,9 @@ const app = new Hono()
       Query.limit(1),
     ];
 
-    const newerRes = await database.listDocuments<DrinksTable | DishesTable>(
-      DATABASE_ID,
-      tableId,
-      newerQueries
-    );
+    const newerRes = await database.listDocuments<
+      DrinksTable | DishesTable | ProductsTable
+    >(DATABASE_ID, tableId, newerQueries);
 
     const nextLinks = [
       olderRes.documents[0] ?? null,
@@ -76,11 +72,9 @@ const app = new Hono()
 
     const queries = [Query.limit(4), Query.equal("category", category)];
 
-    const res = await database.listDocuments<DrinksTable | DishesTable>(
-      DATABASE_ID,
-      tableId,
-      queries
-    );
+    const res = await database.listDocuments<
+      DrinksTable | DishesTable | ProductsTable
+    >(DATABASE_ID, tableId, queries);
 
     return c.json(res.documents);
   });

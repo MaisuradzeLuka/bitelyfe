@@ -1,6 +1,6 @@
 import DefaultPost from "@/features/defaultPost/ui/views/defaultPost-view";
 import DontMiss from "@/features/dontMiss/ui/views/dontMiss-view";
-import { DISHESTABLE_ID } from "@/lib/config";
+import { PRODUCTSTABLE_ID } from "@/lib/config";
 
 export default async function page({
   params,
@@ -11,7 +11,7 @@ export default async function page({
 
   return (
     <main>
-      <DefaultPost id={id} tableId={DISHESTABLE_ID} />
+      <DefaultPost id={id} tableId={PRODUCTSTABLE_ID} />
       <DontMiss
         className="bg-[#FFE1DF] !text-black"
         categoryBg="bg-white"
