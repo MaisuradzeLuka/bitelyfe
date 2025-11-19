@@ -91,7 +91,7 @@ const app = new Hono()
     const limit = c.req.query("limit") || 6;
 
     const fetchDocuments = async (tableId: string) => {
-      const queries = [Query.orderDesc("$createdAt"), Query.limit(+limit / 2)];
+      const queries = [Query.orderDesc("$createdAt"), Query.limit(+limit / 3)];
 
       const res = await databases.listDocuments<
         DrinksTable | DishesTable | ProductsTable

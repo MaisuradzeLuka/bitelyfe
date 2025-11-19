@@ -8,7 +8,7 @@ const EditorsPick = () => {
   return (
     <section className="overflow-x-hidden mb-14">
       <Wrapper className="my-12 mb-18">
-        <SectionTitle title="Pick Your Vaxshami" />
+        <SectionTitle title="Pick Your Dish" />
         <TopCards />
         <Advert classname="" link="" text="" image="/linedev.png" />
       </Wrapper>

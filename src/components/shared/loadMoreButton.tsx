@@ -6,7 +6,7 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
 
 export default function LoadMoreButton({
-  increment = 4,
+  increment = 6,
   defaultLimit = 6,
   isFetching,
   postsLength,

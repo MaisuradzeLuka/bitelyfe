@@ -16,10 +16,10 @@ const DesktopNavigation = () => {
       <div className="h-full flex items-center gap-8">
         <Link href="/">
           <Image
-            src="/image5.png"
+            src="/bitelyfe-logo.png"
             width={125}
             height={60}
-            alt="morena logo"
+            alt="bitelyfe logo"
             className="w-[125px] h-[60px] bg-transparent object-cover"
           />
         </Link>

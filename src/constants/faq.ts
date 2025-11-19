@@ -1,8 +1,8 @@
 export const firstFaqSection = [
   {
-    question: "What is Vaxshami about?",
+    question: "What is ByteLyfe about?",
     answer:
-      "Vaxshami is a culinary blog dedicated to exploring everything food-related — restaurants, dishes, drinks, kitchen appliances, events, festivals, and the latest culinary news.",
+      "ByteLyfe is a culinary blog dedicated to exploring everything food-related — restaurants, dishes, drinks, kitchen appliances, events, festivals, and the latest culinary news.",
   },
   {
     question: "How do you choose which restaurants or dishes to review?",
@@ -20,7 +20,7 @@ export const firstFaqSection = [
       "Yes! We love hearing from our readers. You can send your suggestions via our Contact Us page.",
   },
   {
-    question: "How often is Vaxshami updated?",
+    question: "How often is ByteLyfe updated?",
     answer:
       "We publish new reviews, news, and features regularly — usually several times per week — to keep our readers informed and inspired.",
   },
@@ -34,7 +34,7 @@ export const firstFaqSection = [
 // Section 2: Fun & Casual Questions
 export const secondFaqSection = [
   {
-    question: "What is Vaxshami’s favorite dish?",
+    question: "What is ByteLyfe’s favorite dish?",
     answer:
       "Tough choice — we love everything from crispy khachapuri to exotic international dishes. Honestly, it depends on the mood!",
   },

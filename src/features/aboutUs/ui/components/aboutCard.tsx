@@ -1,4 +1,3 @@
-// components/about/AboutCard.tsx
 import Image from "next/image";
 import Link from "next/link";
 import { FaArrowRightLong } from "react-icons/fa6";

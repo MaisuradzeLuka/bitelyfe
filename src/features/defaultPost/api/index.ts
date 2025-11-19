@@ -1,7 +1,6 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
 import { client } from "@/lib/rpc";
-import { DatabasePost } from "@/types/blogCardTypes";
 
 export const useGetPostById = (tableId: string, id: string) => {
   const query = useQuery({
@@ -20,7 +19,7 @@ export const useGetPostById = (tableId: string, id: string) => {
         throw new Error("Failed to fetch post from API");
       }
 
-      const data = (await response.json()) as DatabasePost[];
+      const data = await response.json();
       return data;
     },
     enabled: !!id,

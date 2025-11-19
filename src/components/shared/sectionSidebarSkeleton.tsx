@@ -19,7 +19,6 @@ const SectionSideSkeleton = () => {
           ))}
         </div>
       </div>
-      {/* <SidebarArticles title="Training" /> */}
     </div>
   );
 };

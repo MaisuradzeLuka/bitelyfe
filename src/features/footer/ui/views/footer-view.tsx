@@ -14,7 +14,7 @@ const Footer = () => {
 
           <Link href="/">
             <Image
-              src="/vaxshami_logo4.png"
+              src="/bitelyfe-logo.png"
               width={170}
               height={25}
               alt="footer logo"

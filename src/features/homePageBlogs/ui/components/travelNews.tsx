@@ -15,7 +15,7 @@ export default function TravelNews() {
 
   return (
     <BlogCardContainer
-      categoryTitle="Best for Vaxshami"
+      categoryTitle="Best for BiteLyfe"
       className="md:grid-cols-3 mb-[60px]"
     >
       {posts.slice(0, 3).map((blog) => (
